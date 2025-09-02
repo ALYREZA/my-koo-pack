@@ -1,0 +1,68 @@
+---
+globs: *.ts,*.tsx,*.svelte,tsconfig.json,eslint.config.js
+---
+
+# TypeScript & Code Quality Guidelines
+
+## TypeScript Configuration
+- [tsconfig.json](mdc:tsconfig.json) - Strict TypeScript settings enabled
+- [src/app.d.ts](mdc:src/app.d.ts) - Global type declarations
+- [src/worker-configuration.d.ts](mdc:src/worker-configuration.d.ts) - Cloudflare Worker types
+
+## Code Quality Tools
+- **ESLint**: Configured with Svelte plugin and TypeScript support
+- **svelte-check**: Type checking for Svelte components
+- **Prettier**: Code formatting (if configured)
+
+## Type Safety Best Practices
+```typescript
+// Define interfaces for data structures
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+}
+
+// Use generic types for reusable components
+interface ButtonProps<T = HTMLButtonElement> {
+  variant: 'primary' | 'secondary';
+  onClick: (event: MouseEvent & { currentTarget: T }) => void;
+  disabled?: boolean;
+}
+
+// Proper prop typing in Svelte components
+let { 
+  variant = 'primary', 
+  onClick, 
+  disabled = false 
+}: ButtonProps = $props();
+```
+
+## SvelteKit Type Integration
+- Use `PageData` and `LayoutData` types from SvelteKit
+- Type `load` functions properly
+- Use `App.PageData` for global page data types
+
+## Error Handling
+- Use discriminated unions for error states
+- Implement proper type guards
+- Handle async operations with proper error types
+
+## Development Commands
+- `pnpm run check` - Full type checking
+- `pnpm run check:watch` - Watch mode type checking  
+- `pnpm run lint` - ESLint with auto-fix
+- `pnpm run cf-typegen` - Generate Cloudflare types
+
+## Import Organization
+1. Node modules first
+2. SvelteKit imports (`$app/`, `$lib/`)
+3. Local imports (relative paths)
+4. Type-only imports with `import type`
+
+## Performance Considerations
+- Use `import type` for type-only imports
+- Enable strict mode for better optimization
+- Use proper tree-shaking with ES modules
+- Minimize bundle size with dynamic imports when needed

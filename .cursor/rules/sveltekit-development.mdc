@@ -1,0 +1,53 @@
+---
+globs: *.svelte,+*.ts,+*.js,*.svelte.ts
+---
+
+# SvelteKit Development Guidelines
+
+## File Naming Conventions
+- **Routes**: Use SvelteKit's file-based routing with `+` prefix
+  - `+page.svelte` - Page components
+  - `+layout.svelte` - Layout components
+  - `+page.ts` - Page load functions
+  - `+layout.ts` - Layout load functions
+  - `+error.svelte` - Error pages
+
+## Svelte 5 Runes (Current Version)
+- Use `$props()` for component props instead of `export let`
+- Use `$state()` for reactive state instead of `let`
+- Use `$derived()` for computed values instead of `$:`
+- Use `$effect()` for side effects instead of `$:`
+- Use `{@render children?.()}` for slot content
+
+## Component Structure
+```svelte
+<script lang="ts">
+  // Props using runes
+  let { title, items = [] }: { title: string; items?: string[] } = $props();
+  
+  // State using runes
+  let count = $state(0);
+  
+  // Derived values
+  let doubled = $derived(count * 2);
+</script>
+
+<!-- Template with Tailwind classes -->
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold">{title}</h1>
+  <!-- content -->
+</div>
+```
+
+## Static Site Considerations
+- No server-side functionality - use `adapter-cloudflare` for static generation
+- All data must be available at build time
+- Use `prerender = true` in `+layout.ts` or `+page.ts` when needed
+- Static assets go in the `static/` directory
+- Use `$lib/` for reusable components and utilities
+
+## TypeScript Integration
+- Always use `<script lang="ts">` in Svelte components
+- Define prop types explicitly
+- Use interfaces for complex data structures
+- Leverage SvelteKit's built-in type safety

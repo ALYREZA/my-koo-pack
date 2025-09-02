@@ -1,0 +1,56 @@
+---
+globs: wrangler.jsonc,svelte.config.js,package.json
+---
+
+# Cloudflare Pages Deployment Guidelines
+
+## Configuration Files
+- [wrangler.jsonc](mdc:wrangler.jsonc) - Cloudflare configuration and bindings
+- [svelte.config.js](mdc:svelte.config.js) - Uses `@sveltejs/adapter-cloudflare` for static generation
+
+## Deployment Process
+1. **Build**: `pnpm run build` generates static files in `.svelte-kit/cloudflare`
+2. **Preview**: `pnpm run preview` tests locally with Cloudflare Pages dev server
+3. **Deploy**: `pnpm run deploy` publishes to Cloudflare Pages
+
+## Static Site Configuration
+- **Output directory**: `.svelte-kit/cloudflare` (configured in wrangler.jsonc)
+- **Compatibility date**: Set to recent date for latest features
+- **Node.js compatibility**: Enabled with `nodejs_als` flag
+
+## Environment Variables & Bindings
+Add to [wrangler.jsonc](mdc:wrangler.jsonc) as needed:
+```json
+{
+  "vars": {
+    "PUBLIC_API_URL": "https://api.example.com"
+  },
+  "kv_namespaces": [
+    {"binding": "MY_KV", "id": "your-kv-id"}
+  ],
+  "d1_databases": [
+    {"binding": "DB", "database_id": "your-d1-id"}
+  ]
+}
+```
+
+## Performance Optimizations
+- **Smart Placement**: Uncomment `"placement": { "mode": "smart" }` for global distribution
+- **Observability**: Enabled for monitoring and analytics
+- **Static Assets**: Use `static/` directory for images, fonts, etc.
+
+## Development Workflow
+1. **Local Development**: `pnpm dev` for hot reload
+2. **Type Generation**: `pnpm run cf-typegen` for Cloudflare types
+3. **Preview**: `pnpm run preview` to test Cloudflare environment locally
+4. **Deploy**: `pnpm run deploy` for production deployment
+
+## Security & Headers
+- Configure custom headers in Cloudflare Pages dashboard
+- Use CSP (Content Security Policy) for enhanced security
+- Enable HTTPS redirect and HSTS headers
+
+## Monitoring & Analytics
+- Cloudflare Analytics available in dashboard
+- Web Vitals tracking enabled by default
+- Custom analytics can be added via Cloudflare Web Analytics

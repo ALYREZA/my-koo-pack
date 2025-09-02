@@ -1,0 +1,52 @@
+---
+globs: *.svelte,*.css,*.ts,*.js
+---
+
+# Tailwind CSS 4.x Styling Guidelines
+
+## Tailwind CSS 4.x Setup
+- Uses `@tailwindcss/vite` plugin in [vite.config.ts](mdc:vite.config.ts)
+- Global styles in [src/app.css](mdc:src/app.css)
+- Includes `@tailwindcss/typography` for rich text styling
+
+## Styling Best Practices
+- **Mobile-first**: Always start with base styles, then use responsive prefixes (`sm:`, `md:`, `lg:`, `xl:`)
+- **Component-first**: Create reusable component classes rather than repeating utility combinations
+- **Semantic naming**: Use descriptive class combinations that express intent
+
+## Common Patterns
+```svelte
+<!-- Layout containers -->
+<div class="container mx-auto px-4 py-8">
+  <!-- Content wrapper -->
+  <div class="max-w-4xl mx-auto space-y-6">
+    <!-- Card component -->
+    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+      <!-- Typography -->
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Title</h2>
+      <p class="text-gray-600 leading-relaxed">Content</p>
+    </div>
+  </div>
+</div>
+```
+
+## Responsive Design
+- Use responsive prefixes: `sm:text-lg md:text-xl lg:text-2xl`
+- Grid layouts: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`
+- Flexbox: `flex flex-col md:flex-row items-center justify-between`
+
+## Component Styling Strategy
+1. **Utility-first** in components for unique styling
+2. **@apply directive** in CSS for repeated patterns
+3. **CSS custom properties** for dynamic values
+4. **Component variants** using TypeScript and conditional classes
+
+## Dark Mode Support
+- Use `dark:` prefix for dark mode variants
+- Consider adding dark mode toggle functionality
+- Test both light and dark themes
+
+## Performance Considerations
+- Tailwind CSS 4.x has improved performance with better tree-shaking
+- Use `@tailwindcss/typography` for rich content areas
+- Avoid deep nesting of utility classes

@@ -1,0 +1,35 @@
+---
+alwaysApply: true
+---
+
+# SvelteKit Static Site Project Structure
+
+This is a static SvelteKit application deployed to Cloudflare Pages with Tailwind CSS.
+
+## Core Architecture
+- **Framework**: SvelteKit 2.x with static adapter for Cloudflare Pages
+- **Styling**: Tailwind CSS 4.x with Vite plugin integration
+- **TypeScript**: Full TypeScript support with strict configuration
+- **Deployment**: Cloudflare Pages with Wrangler CLI
+- **Package Manager**: pnpm (preferred for this project)
+
+## Key Files & Directories
+- [svelte.config.js](mdc:svelte.config.js) - SvelteKit configuration with Cloudflare adapter
+- [vite.config.ts](mdc:vite.config.ts) - Vite configuration with Tailwind CSS plugin
+- [wrangler.jsonc](mdc:wrangler.jsonc) - Cloudflare Pages deployment configuration
+- [package.json](mdc:package.json) - Dependencies and deployment scripts
+- [src/routes/](mdc:src/routes/) - SvelteKit routes and pages
+- [src/lib/](mdc:src/lib/) - Reusable components and utilities
+- [src/app.css](mdc:src/app.css) - Global styles and Tailwind directives
+- [static/](mdc:static/) - Static assets served directly
+
+## Build & Deploy Process
+1. `pnpm run build` - Builds static site to `.svelte-kit/cloudflare`
+2. `pnpm run deploy` - Deploys to Cloudflare Pages using Wrangler
+3. `pnpm run preview` - Local preview with Cloudflare Pages dev server
+
+## Development Commands
+- `pnpm dev` - Development server
+- `pnpm run check` - Type checking
+- `pnpm run lint` - ESLint
+- `pnpm run cf-typegen` - Generate Cloudflare types
