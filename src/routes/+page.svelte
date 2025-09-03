@@ -1,9 +1,10 @@
 <script lang="ts">
   // Profile data
+  import logo from '$lib/assets/logo.jpg';
   let profile = $state({
     name: "Koo Pack",
-    bio: "Professional packaging solutions for your business needs",
-    avatar: "/api/placeholder/150/150",
+    bio: "Maid by hands and love",
+    avatar: logo,
     links: [
       {
         title: "Instagram",
@@ -12,22 +13,16 @@
         color: "from-purple-500 to-pink-500"
       },
       {
-        title: "Email",
-        url: "mailto:info@koopack.com",
-        icon: "📧",
+        title: "Telegram",
+        url: "https://t.me/koo_pack",
+        icon: "🐣",
         color: "from-blue-500 to-cyan-500"
       },
       {
-        title: "Phone",
-        url: "tel:+1234567890",
-        icon: "📞",
+        title: "basalam",
+        url: "https://basalam.com/golly",
+        icon: "👋",
         color: "from-green-500 to-emerald-500"
-      },
-      {
-        title: "Website",
-        url: "#",
-        icon: "🌐",
-        color: "from-indigo-500 to-purple-500"
       }
     ]
   });
@@ -56,9 +51,7 @@
       <!-- Avatar -->
       <div class="relative mb-6">
         <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-r from-purple-400 to-pink-400 p-1 transition-smooth hover:scale-110">
-          <div class="w-full h-full rounded-full bg-gray-800 flex items-center justify-center text-xl font-bold text-white">
-            KP
-          </div>
+          <img src={profile.avatar} alt={profile.name} class="w-full h-full rounded-full" />
         </div>
         <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-4 border-slate-900 pulse-slow"></div>
       </div>
