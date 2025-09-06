@@ -3,7 +3,12 @@
 declare global {
 	namespace App {
         interface Platform {
-            env: Env
+            env: {
+                ADMIN_PASSWORD?: string;
+                SUPABASE_URL?: string;
+                SUPABASE_KEY?: string;
+                Authorization?: string;
+            }
             cf: CfProperties
             ctx: ExecutionContext
         }

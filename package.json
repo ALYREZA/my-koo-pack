@@ -37,9 +37,13 @@
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
+			"@tailwindcss/oxide",
 			"esbuild",
 			"sharp",
 			"workerd"
 		]
+	},
+	"dependencies": {
+		"@supabase/supabase-js": "^2.57.2"
 	}
 }
