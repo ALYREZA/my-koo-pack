@@ -2,9 +2,7 @@ import type { LayoutLoad } from './$types.js';
 
 export const prerender = false;
 
-export const load: LayoutLoad = async ({ platform }) => {
-	// This will be available in the layout component
-	return {
-		platform: platform || null
-	};
+export const load: LayoutLoad = async () => {
+	// Platform data will be accessed directly in components
+	return {};
 };

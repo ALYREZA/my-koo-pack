@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { MobileEntry } from '$lib/types/auth.js';
+import type { Request } from '$lib/types/auth.js';
 
 /**
  * Create Supabase client using platform environment variables
@@ -13,9 +13,9 @@ function createSupabaseClient(platform: any) {
 }
 
 /**
- * Add a new mobile entry to Supabase
+ * Add a new request to Supabase
  */
-export async function addMobileEntry(mobile: string, code: string, platform: any): Promise<{ success: boolean; error?: string }> {
+export async function addRequest(mobile: string, code: string, platform: any): Promise<{ success: boolean; error?: string }> {
 	const supabase = createSupabaseClient(platform);
 	if (!supabase) {
 		return { success: false, error: 'Supabase client not initialized' };
@@ -23,12 +23,14 @@ export async function addMobileEntry(mobile: string, code: string, platform: any
 
 	try {
 		const { error } = await supabase
-			.from('mobile_entries')
+			.from('requests')
 			.insert({
 				mobile: mobile.replace(/\D/g, ''), // Store clean mobile number
 				code,
+				status: 'registered',
+				payload: null,
 				created_at: new Date().toISOString(),
-				used: false
+				updated_at: null
 			});
 
 		if (error) {
@@ -38,15 +40,15 @@ export async function addMobileEntry(mobile: string, code: string, platform: any
 
 		return { success: true };
 	} catch (error) {
-		console.error('Error adding mobile entry:', error);
-		return { success: false, error: 'Failed to add mobile entry' };
+		console.error('Error adding request:', error);
+		return { success: false, error: 'Failed to add request' };
 	}
 }
 
 /**
- * Get all mobile entries from Supabase
+ * Get all requests from Supabase
  */
-export async function getMobileEntries(platform: any): Promise<{ data: MobileEntry[] | null; error?: string }> {
+export async function getRequests(platform: any): Promise<{ data: Request[] | null; error?: string }> {
 	const supabase = createSupabaseClient(platform);
 	if (!supabase) {
 		return { data: null, error: 'Supabase client not initialized' };
@@ -54,7 +56,7 @@ export async function getMobileEntries(platform: any): Promise<{ data: MobileEnt
 
 	try {
 		const { data, error } = await supabase
-			.from('mobile_entries')
+			.from('requests')
 			.select('*')
 			.order('created_at', { ascending: false });
 
@@ -63,17 +65,17 @@ export async function getMobileEntries(platform: any): Promise<{ data: MobileEnt
 			return { data: null, error: error.message };
 		}
 
-		return { data: data as MobileEntry[] };
+		return { data: data as Request[] };
 	} catch (error) {
-		console.error('Error fetching mobile entries:', error);
-		return { data: null, error: 'Failed to fetch mobile entries' };
+		console.error('Error fetching requests:', error);
+		return { data: null, error: 'Failed to fetch requests' };
 	}
 }
 
 /**
- * Mark a mobile entry as used
+ * Update request status
  */
-export async function markMobileEntryAsUsed(id: string, platform: any): Promise<{ success: boolean; error?: string }> {
+export async function updateRequestStatus(id: string, status: string, platform: any): Promise<{ success: boolean; error?: string }> {
 	const supabase = createSupabaseClient(platform);
 	if (!supabase) {
 		return { success: false, error: 'Supabase client not initialized' };
@@ -81,8 +83,11 @@ export async function markMobileEntryAsUsed(id: string, platform: any): Promise<
 
 	try {
 		const { error } = await supabase
-			.from('mobile_entries')
-			.update({ used: true })
+			.from('requests')
+			.update({ 
+				status: status,
+				updated_at: new Date().toISOString()
+			})
 			.eq('id', id);
 
 		if (error) {
@@ -92,7 +97,7 @@ export async function markMobileEntryAsUsed(id: string, platform: any): Promise<
 
 		return { success: true };
 	} catch (error) {
-		console.error('Error updating mobile entry:', error);
-		return { success: false, error: 'Failed to update mobile entry' };
+		console.error('Error updating request:', error);
+		return { success: false, error: 'Failed to update request' };
 	}
 }

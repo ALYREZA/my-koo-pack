@@ -3,6 +3,5 @@ import type { PageLoad } from './$types.js';
 export const prerender = false;
 
 export const load: PageLoad = async () => {
-	// Platform data will be accessed directly in components
 	return {};
 };

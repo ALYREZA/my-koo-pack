@@ -2,12 +2,14 @@ export interface AdminCredentials {
 	password: string;
 }
 
-export interface MobileEntry {
+export interface Request {
 	id: string;
 	mobile: string;
 	code: string;
-	createdAt: string;
-	used: boolean;
+	status: string;
+	payload: string | null;
+	created_at: string;
+	updated_at: string | null;
 }
 
 export interface AuthSession {

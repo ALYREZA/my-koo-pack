@@ -23,6 +23,12 @@
         url: "https://basalam.com/golly",
         icon: "👋",
         color: "from-green-500 to-emerald-500"
+      },
+      {
+        title: "Tracking code",
+        url: "/tracking",
+        icon: "🔍",
+        color: "from-orange-500 to-red-500"
       }
     ]
   });
