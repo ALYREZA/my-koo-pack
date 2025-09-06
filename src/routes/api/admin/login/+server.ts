@@ -3,7 +3,8 @@ import type { RequestHandler } from './$types.js';
 
 export const POST: RequestHandler = async ({ request, platform }) => {
 	try {
-		const { password } = await request.json();
+		const body = await request.json() as { password?: string };
+		const { password } = body;
 
 		if (!password) {
 			return json({ success: false, error: 'Password is required' }, { status: 400 });
